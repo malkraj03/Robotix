@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>
+
+        </title>
+        <script>
+                    function trigger(Val) {
+                        document.getElementById('sliderValue').value = Val;
+
+             }
+             window.setInterval(function() {
+                document.getElementById('sliderValue').value = document.getElementById('formInput').value
+                document.myform.submit()
+            },2000)
+        </script>
+    </head>
+    <body>
+        <form action="/click" method="post" name="myform">
+            <input type="range"  value="{{value}}" oninput="trigger(this.value)" min="0" max="20" name="formInput" id="formInput"/>
+            <input type="text" value="{{value}}" name="sliderValue" id="sliderValue">
+        </form>
+     <p align="right"><input type="button" value="Forward"></p><br><br>
+        <p align="right"><input type="button" value="Backward"></p><br><br>
+    <p align="right"><input type="button" value="Stop"></p><br><br>
+    </body>
+</html>
