@@ -3,24 +3,35 @@
         <title>
 
         </title>
-        <script>
-                    function trigger(Val) {
-                        document.getElementById('sliderValue').value = Val;
-
-             }
-             window.setInterval(function() {
-                document.getElementById('sliderValue').value = document.getElementById('formInput').value
-                document.myform.submit()
-            },2000)
-        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
     <body>
-        <form action="/click" method="post" name="myform">
-            <input type="range"  value="{{value}}" oninput="trigger(this.value)" min="0" max="20" name="formInput" id="formInput"/>
-            <input type="text" value="{{value}}" name="sliderValue" id="sliderValue">
-        </form>
-     <p align="right"><input type="button" value="Forward"></p><br><br>
+    <form method = 'POST'>
+    <div class="rangeslider">
+        <input type="range" min="1" max="50" value="{{value}}" class="myslider" id="sliderRange">
+         <input type="text" value="{{value}}" name="sliderValue" id="sliderValue">
+    </div>
+        <p align="right"><input type="button" value="Forward"></p><br><br>
         <p align="right"><input type="button" value="Backward"></p><br><br>
-    <p align="right"><input type="button" value="Stop"></p><br><br>
-    </body>
+        <p align="right"><input type="button" value="Stop"></p><br><br>
+        <script>
+            const Http = new XMLHttpRequest();
+            var rangeslider = document.getElementById("sliderRange");
+            var current;
+
+            rangeslider.oninput = function() {
+                current = this.value;
+                document.getElementById("sliderValue").value = current;
+
+                // I've added this call to the server, which send 'current' value
+                Http.open('POST', '/slider_update')
+                Http.send(current)
+
+            }
+
+        </script>
+
+
+
+</body>
 </html>
